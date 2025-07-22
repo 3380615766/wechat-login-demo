@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>微信扫码确认登录</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 30px;
+        text-align: center;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>你正在登录 Cell Spot 桌面软件</h2>
+    <p>请点击下方按钮确认登录</p>
+    <button onclick="confirmLogin()">确认登录</button>
+
+    <script>
+      function confirmLogin() {
+        const sid = new URLSearchParams(location.search).get("sid");
+        const mockUser = {
+          nickname: "扫码用户",
+          avatar: "https://api.dicebear.com/7.x/pixel-art/svg?seed=" + sid,
+          token: "token_" + sid,
+        };
+
+        // ✅ 将登录状态写入 localStorage（关键！login.js 轮询就靠这个）
+        localStorage.setItem("login-session-" + sid, JSON.stringify(mockUser));
+        document.body.innerHTML = "<p>✅ 登录成功，请返回电脑端</p>";
+      }
+    </script>
+  </body>
+</html>
